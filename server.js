@@ -14,10 +14,11 @@ app.use(cors({
 app.use(cookieparser())
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'mydb'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: 'mydb',
+    port: process.env.DB_PORT
 })
 
 db.connect((err) => {
@@ -44,7 +45,7 @@ app.post('/login', (req, res) => {
         }
         else {
             const getData = JSON.parse(JSON.stringify(result[0]))
-            const token = jwt.sign({ userId: getData.id }, process.env.SECRET_KEY, { expiresIn: '24h' })
+            const token = jwt.sign({ userId: getData.id }, process.env.JWT_TOKEN_SECRET_KEY, { expiresIn: '24h' })
             res.cookie('token', token, {
                 httpOnly: true,
                 sameSite: 'strict',
@@ -63,7 +64,7 @@ function authenticate(req, res, next) {
         res.status(500).json({ message: 'unauthorize user!' })
     }
     else {
-        const userId = jwt.verify(token, process.env.SECRET_KEY)
+        const userId = jwt.verify(token, process.env.JWT_TOKEN_SECRET_KEY)
         console.log(userId)
         req.userId = userId
         next()

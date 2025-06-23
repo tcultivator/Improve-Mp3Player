@@ -1,12 +1,7 @@
 const username = document.getElementById('username')
 const password = document.getElementById('password')
-
-
 document.getElementById('login').addEventListener('submit', async function (e) {
     e.preventDefault()
-    console.log(username.value)
-    console.log(password.value)
-
     const login = await fetch('https://improve-mp3player.onrender.com/login', {
         method: 'POST',
         credentials: 'include',
@@ -23,5 +18,4 @@ document.getElementById('login').addEventListener('submit', async function (e) {
     else {
         console.log(res.message)
     }
-
 })

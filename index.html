@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/2820820f6e.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <title>Mp3 Player</title>
+</head>
+
+<body>
+    <div id="header">
+        <h2>Mp3 Player</h2>
+        <div id="account" style="display: none;">
+            <button onclick="window.location.replace('register.html')">Signup</button>
+            <button onclick="window.location.replace('login.html')">Login</button>
+        </div>
+        <div id="logout" style="display: none;">
+            <button onclick="logoutDelay()">Logout</button>
+        </div>
+
+    </div>
+    <div id="disk">
+        <i class="fa-solid fa-music" id="cdicon"></i>
+    </div>
+    <p>Playing : <span id="playingSong"></span></p>
+    <div id="song">
+        <input type="range" id="duration" value="0">
+    </div>
+    <div id="inputSong">
+        <input type="file" id="inputFile">
+        <audio id="audio"></audio>
+    </div>
+
+    <div id="control">
+        <button id="rep" onclick="repeat()"><i class="fa-solid fa-repeat"></i></button>
+        <button id="prev" onclick="prevSong()"><i class="fa-solid fa-backward-step"></i></button>
+        <button id="playBtn" onclick="playPaused()"><i class="fa-regular fa-circle-play"></i></button>
+        <button id="next" onclick="nextSong()"><i class="fa-solid fa-forward-step"></i></button>
+        <button id="mutee" onclick="displaySongList()"><i class="fa-solid fa-list"></i></button>
+    </div>
+
+
+
+
+    <div id="logutDelay" style="display: none;">
+        <div class="logoutDelayContent">
+            <h3>Oh no! Are you really leaving?</h3>
+            <input type="range" id="loadingBar" max="10" step="0.1" value="0">
+            <div class="logoutDelayBtn">
+                <button onclick="logout()">Yes</button>
+                <button onclick="cancelLogout()">No</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="songList">
+        <h2>Song List</h2>
+        <div id="songName">
+
+        </div>
+    </div>
+</body>
+
+</html>

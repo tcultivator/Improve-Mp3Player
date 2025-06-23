@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserLogin</title>
+    <link rel="stylesheet" href="login.css">
+    <script defer src="login.js"></script>
+</head>
+
+<body>
+    <form id="login">
+        <h2>Login</h2>
+        <button type="button" onclick="window.location.replace('index.html')" id="cancelLog">X</button>
+
+        <div id="usernameBody">
+            <input type="text" id="username" required placeholder="">
+            <label for="username">Enter Username</label>
+        </div>
+        <div id="passwordBody">
+            <input type="password" id="password" required placeholder="">
+            <label for="password">Enter Password</label>
+        </div>
+        <div id="loginNav">
+            <button type="submit" >Submit</button>
+            <label>Don't have account yet? <a href="register.html">Signup</a></label>
+        </div>
+    </form>
+</body>
+
+</html>

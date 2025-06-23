@@ -1,0 +1,365 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #000328;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+#header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 10px;
+
+}
+
+#header #account {
+    display: flex;
+    gap: 5px;
+
+}
+
+#header #account button {
+    cursor: pointer;
+    position: relative;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 34px;
+    background-color: transparent;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    overflow: hidden;
+
+}
+
+#header #logout button {
+    cursor: pointer;
+    position: relative;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 34px;
+    background-color: transparent;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    overflow: hidden;
+
+}
+
+#header #logout button:hover {
+    background-color: white;
+    color: #000328;
+}
+
+#header #account button:last-child {
+    color: #000328;
+    border: 2px solid rgb(202, 202, 202);
+    background-color: rgb(202, 202, 202);
+    font-weight: bold;
+}
+
+#header #account button:last-child:hover {
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    background-color: transparent;
+}
+
+#header #account button:first-child:hover {
+    color: #000328;
+    border: 2px solid rgb(255, 255, 255);
+    background-color: white;
+}
+
+#disk {
+    background-color: #ffffff0c;
+    max-width: 600px;
+    min-width: 200px;
+    width: 70%;
+    margin: auto;
+    max-height: 600px;
+    min-height: 200px;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 100%;
+    opacity: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+#disk i {
+    font-size: 330px;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    animation: move 2s alternate-reverse infinite;
+    animation-play-state: paused;
+}
+
+@keyframes move {
+    0% {
+        transform: rotate(-10deg);
+    }
+
+    0% {
+        transform: rotate(10deg);
+    }
+}
+
+@media (max-width:700px) {
+    #disk i {
+        font-size: 230px;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+
+    }
+}
+
+@media (max-width:670px) {
+    #disk i {
+        font-size: 130px;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+
+    }
+}
+
+
+#song {
+    display: flex;
+    padding: 20px;
+}
+
+#song input {
+    width: 70%;
+    margin: auto;
+
+    -webkit-appearance: none;
+    
+}
+
+#song input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #00458E;
+    height: 1rem;
+    width: 10px;
+
+    margin-top: -8px;
+    transition: 1s ease;
+    cursor: pointer;
+}
+
+#song input::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.603);
+    height: 1px;
+
+}
+
+
+
+
+
+
+#inputSong {
+
+
+    display: flex;
+}
+
+#inputSong input {
+    margin: auto;
+    
+    width: 90px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+
+}
+
+#inputSong input::-webkit-file-upload-button {
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #00458E;
+    position: absolute;
+    
+}
+
+#control {
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translate(-50%);
+    align-items: center;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    gap: 20px;
+}
+
+#control button {
+    padding: 10px;
+    aspect-ratio: 1/1;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+
+}
+
+#control #playBtn i {
+
+    font-size: 50px;
+
+}
+
+#control #rep i {
+
+    font-size: 20px;
+
+}
+
+#control #mutee i {
+
+    font-size: 20px;
+
+}
+
+#control #prev i {
+
+    font-size: 20px;
+
+}
+#control #next i {
+
+    font-size: 20px;
+
+}
+
+#logutDelay {
+    background-color: rgba(0, 0, 0, 0.329);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    font-size: 12px;
+}
+
+#logutDelay .logoutDelayContent {
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.527);
+    border-radius: 15px;
+    width: 250px;
+    color: black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#logutDelay .logoutDelayContent .logoutDelayBtn {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+}
+
+.logoutDelayBtn button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #000328;
+    cursor: pointer;
+}
+
+.logoutDelayBtn button:hover {
+    background-color: #02074b;
+
+}
+
+#logutDelay input {
+
+    width: 80%;
+    margin: auto;
+}
+
+
+
+
+
+
+#songList {
+    background-color: rgba(0, 0, 0, 0.459);
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    top: 0;
+    left: -40%;
+    color: white;
+    transition: .3s;
+
+}
+
+#songList h2 {
+    background-color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+#songName {
+    display: flex;
+    word-break: break-all;
+    box-sizing: border-box;
+    flex-direction: column;
+    
+}
+
+#songName button {
+    cursor: pointer;
+    padding: 20px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    background-color: transparent;
+    border-bottom: 1px solid rgb(145, 145, 145);
+    text-align: left;
+}
+
+#songName button:hover {
+   background-color: rgb(54, 54, 54);
+}
+
+
+
+#playingSong{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}

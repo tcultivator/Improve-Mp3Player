@@ -4,7 +4,7 @@ const password = document.getElementById('password')
 
 document.getElementById('register').addEventListener('submit', async (e) => {
     e.preventDefault()
-    const register = await fetch('http://127.0.0.1:8080/signup', {
+    const register = await fetch('https://improve-mp3player.onrender.com/signup', {
         method: 'POST',
         credentials: 'include',
         headers: {

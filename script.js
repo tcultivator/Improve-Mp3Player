@@ -35,7 +35,7 @@ function cancelLogout() {
 
 (async () => {
 
-    const authenticate = await fetch('http://127.0.0.1:8080/authenticate', {
+    const authenticate = await fetch('https://improve-mp3player.onrender.com/authenticate', {
         method: 'POST',
         credentials: 'include'
     })
@@ -63,7 +63,7 @@ function cancelLogout() {
 async function logout() {
     logoutModal.style = `display:none;`
     clearInterval(loader)
-    const out = await fetch('http://127.0.0.1:8080/logout', {
+    const out = await fetch('https://improve-mp3player.onrender.com/logout', {
         method: 'POST',
         credentials: 'include'
     })

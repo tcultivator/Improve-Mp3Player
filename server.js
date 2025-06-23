@@ -8,7 +8,7 @@ require('dotenv').config()
 const app = express()
 app.use(express.json())
 app.use(cors({
-    origin: 'http://127.0.0.1:5500',
+    origin: 'https://tcultivator.github.io/Improve-Mp3Player',
     credentials: true
 }))
 app.use(cookieparser())

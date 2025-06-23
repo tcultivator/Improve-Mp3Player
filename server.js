@@ -48,8 +48,8 @@ app.post('/login', (req, res) => {
             const token = jwt.sign({ userId: getData.id }, process.env.JWT_TOKEN_SECRET_KEY, { expiresIn: '24h' })
             res.cookie('token', token, {
                 httpOnly: true,
-                sameSite: 'strict',
-                maxAge: 60 * 60 * 1000,
+                sameSite: 'none',
+                maxAge: 24 * 60 * 60 * 1000,
                 secure: true
             })
             res.status(200).json({ message: 'may nakuha na data success!' })
@@ -97,7 +97,7 @@ app.post('/logout', authenticate, (req, res) => {
     else {
         res.clearCookie('token', {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000,
             secure: true
         })

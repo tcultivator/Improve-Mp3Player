@@ -1,40 +1,167 @@
-let load = 0;
-const loadingBar = document.getElementById('loadingBar')
-const logoutModal = document.getElementById('logutDelay')
-let loader;
+const audio = document.getElementById('audio');
+const duration = document.getElementById('duration');
+const playIcon = document.getElementById('playIcon');
+const cdIcon = document.getElementById('cdicon');
+const playingSongTxt = document.getElementById('playingSong');
+const songListPanel = document.getElementById('songList');
+const songNameContainer = document.getElementById('songName');
+
+let listOfSongs = [];
+let currentlyPlayingIndex = 0;
+let isLooping = false;
+
+// 1. Play/Pause Functionality
+function playPaused() {
+    if (!audio.src) return alert("Please add a song first!");
+
+    if (audio.paused) {
+        audio.play();
+        updateUI(true);
+    } else {
+        audio.pause();
+        updateUI(false);
+    }
+}
+
+function updateUI(isPlaying) {
+    playIcon.className = isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play";
+    cdIcon.style.animationPlayState = isPlaying ? "running" : "paused";
+}
+
+function updatePlaylistUI() {
+    const songNameContainer = document.getElementById('songName');
+    const emptyState = document.getElementById('emptyState');
+
+    if (listOfSongs.length > 0) {
+        emptyState.style.display = 'none';
+    }
+
+    songNameContainer.innerHTML = ''; // Clear current list
+
+    listOfSongs.forEach((file, index) => {
+        const isActive = index === currentlyPlayingIndex ? 'active-song' : '';
+
+        // Use FontAwesome or Bootstrap Icons as per your setup
+        songNameContainer.innerHTML += `
+            <button class="song-item ${isActive}" onclick="selectSong(${index})">
+                <i class="fa-solid fa-play-circle"></i>
+                <div class="song-details">
+                    <div class="song-title">${file.name.replace('.mp3', '')}</div>
+                </div>
+            </button>`;
+    });
+}
+
+// 2. Add New Songs
+document.getElementById('inputFile').addEventListener('change', (e) => {
+    const files = e.target.files;
+    for (let file of files) {
+        listOfSongs.push(file);
+    }
+
+    updatePlaylistUI(); // Refresh the list
+
+    if (audio.paused && listOfSongs.length === 1) {
+        selectSong(0);
+    }
+});
+
+// 3. Select & Load Song
+function selectSong(index) {
+    currentlyPlayingIndex = index;
+    const file = listOfSongs[index];
+    audio.src = URL.createObjectURL(file);
+    playingSongTxt.textContent = file.name;
+
+    audio.play();
+    updateUI(true);
+
+    // This highlights the current song in the sidebar
+    updatePlaylistUI();
+
+    // Optional: Close panel on mobile after selection
+    if (window.innerWidth < 768) {
+        displaySongList();
+    }
+}
+
+// 4. Progress Bar Logic (Native & Smooth)
+audio.addEventListener('timeupdate', () => {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    duration.value = progress || 0;
+
+    // Update timestamps
+    document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+    if (audio.duration) {
+        document.getElementById('totalDuration').textContent = formatTime(audio.duration);
+    }
+});
+
+// Seek Functionality
+duration.addEventListener('input', () => {
+    const time = (duration.value / 100) * audio.duration;
+    audio.currentTime = time;
+});
+
+// Auto Next Song
+audio.addEventListener('ended', () => {
+    if (!isLooping) nextSong();
+});
+
+function nextSong() {
+    if (currentlyPlayingIndex < listOfSongs.length - 1) {
+        selectSong(currentlyPlayingIndex + 1);
+    }
+}
+
+function prevSong() {
+    if (currentlyPlayingIndex > 0) {
+        selectSong(currentlyPlayingIndex - 1);
+    }
+}
+
+function repeat() {
+    isLooping = !isLooping;
+    audio.loop = isLooping;
+    document.getElementById('rep').style.color = isLooping ? "#8a8aff" : "white";
+}
+
+function displaySongList() {
+    songListPanel.classList.toggle('active');
+}
+
+function formatTime(seconds) {
+    let min = Math.floor(seconds / 60);
+    let sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+// 5. Logout Logic
+let logoutLoad = 0;
+let logoutInterval;
+
 function logoutDelay() {
-    logoutModal.style = `display:flex;`
-    loader = setInterval(() => {
-        load = load + 0.2
-        loadingBar.value = load
-        if (loadingBar.value >= 10) {
-            logout()
-            clearInterval(loader)
-            logoutModal.style = `display:none;`
+    document.getElementById('logutDelay').style.display = 'flex';
+    const fill = document.getElementById('loadingBarFill');
+    logoutLoad = 0;
+
+    logoutInterval = setInterval(() => {
+        logoutLoad += 2;
+        fill.style.width = logoutLoad + "%";
+        if (logoutLoad >= 100) {
+            clearInterval(logoutInterval);
+            logout();
         }
-    }, 100);
+    }, 50);
 }
+
 function cancelLogout() {
-    clearInterval(loader)
-    logoutModal.style = `display:none;`
-    load = 0
-    loadingBar.value = load
+    clearInterval(logoutInterval);
+    document.getElementById('logutDelay').style.display = 'none';
 }
-(async () => {
-    const authenticate = await fetch('https://improve-mp3player.onrender.com/authenticate', {
-        method: 'POST',
-        credentials: 'include'
-    })
-    const data = await authenticate.json()
-    if (authenticate.ok) {
-        document.getElementById('account').style = `display:none`
-        document.getElementById('logout').style = `display:flex`
-    }
-    else {
-        document.getElementById('account').style = `display:flex`
-        document.getElementById('logout').style = `display:none`
-    }
-})();
+
+
+
 async function logout() {
     logoutModal.style = `display:none;`
     clearInterval(loader)
@@ -52,161 +179,3 @@ async function logout() {
         document.getElementById('logout').style = `display:flex`
     }
 }
-const duration = document.getElementById('duration');
-let statuses;
-let interval;
-let index = 0;
-let audio = document.getElementById('audio');
-let playing = false;
-let file;
-let rep = false;
-let songDuration;
-function playPaused() {
-    if (!file) {
-        console.log('no music yet')
-    }
-    else {
-        playing = !playing
-        playing ? (statuses = 'playing',
-            document.getElementById('playBtn').innerHTML = `<i class="fa-regular fa-circle-pause"></i>`
-        ) :
-            (statuses = 'paused',
-                document.getElementById('playBtn').innerHTML = `<i class="fa-regular fa-circle-play"></i>`
-            )
-        playBtn()
-        diskControl(playing)
-    }
-}
-function playBtn() {
-    switch (statuses) {
-        case 'newSong':
-            document.getElementById('playingSong').textContent = listOfSongs[currentlyPlayingSong].name
-            document.getElementById('playBtn').innerHTML = `<i class="fa-regular fa-circle-pause"></i>`
-            audio.addEventListener('loadedmetadata', () => {
-                clearInterval(interval)
-                songDuration = audio.duration;
-                duration.max = Math.floor(songDuration);
-                audio.play();
-                diskControl(playing)
-                index = 0;
-                duration.addEventListener('change', () => {
-                    audio.currentTime = duration.value
-                    index = audio.currentTime
-                })
-                interval = setInterval(() => {
-                    index++
-                    duration.value = index;
-                    if (duration.value >= Math.floor(songDuration) && audio.loop == false) {
-                        index = 0
-                        duration.value = index;
-                        if (currentlyPlayingSong < listOfSongs.length - 1) {
-                            nextSong()
-                            clearInterval(interval)
-                        }
-                        else {
-                            document.getElementById('playBtn').innerHTML = `<i class="fa-regular fa-circle-play"></i>`
-                            playing = false
-                            diskControl(playing)
-                            clearInterval(interval)
-                        }
-                    }
-                    else if (duration.value >= Math.floor(songDuration) && audio.loop == true) {
-                        index = 0
-                        duration.value = index;
-                    }
-                }, 1000);
-            });
-            break;
-        case 'playing':
-            audio.play();
-            interval = setInterval(() => {
-                index++
-                duration.value = index;
-                if (duration.value >= Math.floor(songDuration) && audio.loop == false) {
-                    index = 0
-                    duration.value = index;
-                    clearInterval(interval)
-                    playing = false
-                    diskControl(playing)
-                }
-                else if (duration.value >= Math.floor(songDuration) && audio.loop == true) {
-                    index = 0
-                    duration.value = index;
-                    console.log(index)
-                }
-            }, 1000);
-            break;
-        case 'paused':
-            audio.pause();
-            clearInterval(interval)
-            break;
-        default:
-            break;
-    }
-}
-let currentlyPlayingSong=0;
-const listOfSongs = []
-let songPosition = 0;
-document.getElementById('inputFile').addEventListener('change', () => {
-    file = document.getElementById('inputFile').files[0]
-    const filename = file.name;
-    const audioUrl = URL.createObjectURL(file)
-    listOfSongs.push(file);
-    audio.src = URL.createObjectURL(listOfSongs[songPosition])
-    statuses = 'newSong'
-    playBtn()
-    playing = true;
-    document.getElementById('songName').innerHTML += `
-         <button onclick="selectSong(${songPosition})">${listOfSongs[songPosition].name}</button>`
-    currentlyPlayingSong = songPosition
-    songPosition++
-})
-function selectSong(songPosition) {
-    currentlyPlayingSong = songPosition
-    audio.src = URL.createObjectURL(listOfSongs[songPosition])
-    statuses = 'newSong'
-    playBtn()
-    playing = true;
-}
-function nextSong() {
-    if (listOfSongs.length > currentlyPlayingSong) {
-        currentlyPlayingSong++
-        audio.src = URL.createObjectURL(listOfSongs[currentlyPlayingSong])
-        statuses = 'newSong'
-        playBtn()
-        playing = true;
-    }
-}
-function prevSong() {
-    if (currentlyPlayingSong >= 0) {
-        currentlyPlayingSong--
-        audio.src = URL.createObjectURL(listOfSongs[currentlyPlayingSong])
-        statuses = 'newSong'
-        playBtn()
-        playing = true;
-    }
-}
-let songlistDisplay = false;
-function displaySongList() {
-    songlistDisplay = !songlistDisplay
-    songlistDisplay ?
-        document.getElementById('songList').style = `left:0` :
-        document.getElementById('songList').style = `left:-40%`
-}
-// reusable // stop/play the disk from spinning
-function diskControl(playing) {
-    playing ?
-        document.getElementById('cdicon').style = `animation-play-state: running;` :
-        document.getElementById('cdicon').style = `animation-play-state: paused;`
-}
-function repeat() {
-    rep = !rep
-    rep ? (audio.loop = true,
-        document.getElementById('rep').style = `color:#00458E`
-    ) :
-        (audio.loop = false,
-            document.getElementById('rep').style = `color:white`
-        );
-}
-
-

@@ -4,69 +4,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/2820820f6e.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Modern Mp3 Player</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <title>Mp3 Player</title>
 </head>
 
 <body>
-    <div id="header">
-        <h2>Mp3 Player</h2>
-        <div id="account" style="display: none;">
-            <button onclick="window.location.replace('register.html')">Signup</button>
-            <button onclick="window.location.replace('login.html')">Login</button>
+
+    <div class="glass-background"></div>
+
+    <header id="header">
+        <div class="logo">MP3<span>FLUX</span></div>
+        <div id="account" class="auth-buttons">
+            <button onclick="window.location.replace('register.html')" class="btn-outline">Signup</button>
+            <button onclick="window.location.replace('login.html')" class="btn-filled">Login</button>
         </div>
         <div id="logout" style="display: none;">
-            <button onclick="logoutDelay()">Logout</button>
+            <button onclick="logoutDelay()" class="btn-outline">Logout</button>
         </div>
+    </header>
 
-    </div>
-    <div id="disk">
-        <i class="fa-solid fa-music" id="cdicon"></i>
-    </div>
-    <div id="progress">
-        <p>Playing : <span id="playingSong"></span></p>
-        <div id="song">
-            <input type="range" id="duration" value="0">
-        </div>
-        <div id="inputSong">
-            <input type="file" id="inputFile">
-            <audio id="audio"></audio>
-        </div>
-    </div>
-
-    <div id="control">
-        <button id="rep" onclick="repeat()"><i class="fa-solid fa-repeat"></i></button>
-        <button id="prev" onclick="prevSong()"><i class="fa-solid fa-backward-step"></i></button>
-        <button id="playBtn" onclick="playPaused()"><i class="fa-regular fa-circle-play"></i></button>
-        <button id="next" onclick="nextSong()"><i class="fa-solid fa-forward-step"></i></button>
-        <button id="mutee" onclick="displaySongList()"><i class="fa-solid fa-list"></i></button>
-    </div>
-
-
-
-
-    <div id="logutDelay" style="display: none;">
-        <div class="logoutDelayContent">
-            <h3>Oh no! Are you really leaving?</h3>
-            <input type="range" id="loadingBar" max="10" step="0.1" value="0">
-            <div class="logoutDelayBtn">
-                <button onclick="logout()">Yes</button>
-                <button onclick="cancelLogout()">No</button>
+    <main class="player-container">
+        <div class="player-card">
+            <!-- CD Disk Section -->
+            <div id="disk">
+                <div class="disk-inner">
+                    <i class="fa-solid fa-music" id="cdicon"></i>
+                </div>
             </div>
 
+            <!-- Song Info -->
+            <div class="song-info">
+                <h2 id="playingSong">No Song Selected</h2>
+                <p class="status-text" id="statusText">Ready to play</p>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-area">
+                <input type="range" id="duration" value="0" min="0" max="100">
+                <div class="time-stamps">
+                    <span id="currentTime">0:00</span>
+                    <span id="totalDuration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div id="control">
+                <button id="rep" onclick="repeat()" title="Repeat"><i class="fa-solid fa-repeat"></i></button>
+                <button id="prev" onclick="prevSong()"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="playBtn" onclick="playPaused()" class="main-play">
+                    <i class="fa-solid fa-play" id="playIcon"></i>
+                </button>
+                <button id="next" onclick="nextSong()"><i class="fa-solid fa-forward-step"></i></button>
+                <button onclick="displaySongList()"><i class="fa-solid fa-list"></i></button>
+            </div>
+
+            <!-- Hidden File Input Styled -->
+            <div class="upload-section">
+                <label for="inputFile" class="file-label">
+                    <i class="fa-solid fa-plus"></i> Add Music
+                </label>
+                <input type="file" id="inputFile" accept="audio/*">
+                <audio id="audio"></audio>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sidebar Playlist Panel -->
+<div id="songList" class="side-panel">
+    <div class="panel-header">
+        <div class="panel-title">
+            <i class="bi bi-music-note-list"></i>
+            <span>Your Library</span>
+        </div>
+        <button class="close-panel" onclick="displaySongList()">&times;</button>
+    </div>
+
+    <div class="playlist-container">
+        <!-- If no songs are added, show this -->
+        <div id="emptyState" class="empty-state">
+            <i class="bi bi-cloud-plus"></i>
+            <p>No songs added yet</p>
+        </div>
+        
+        <!-- This is where the JS will inject buttons -->
+        <div id="songName" class="playlist-items"></div>
+    </div>
+</div>
+
+    <!-- Logout Modal -->
+    <div id="logutDelay" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Logging out...</h3>
+            <div class="loader-container">
+                <div id="loadingBarFill"></div>
+            </div>
+            <div class="modal-btns">
+                <button onclick="cancelLogout()" class="btn-cancel">Stay</button>
+                <button onclick="logout()" class="btn-confirm">Leave Now</button>
+            </div>
         </div>
     </div>
 
-
-    <div id="songList">
-        <h2>Song List</h2>
-        <div id="songName">
-
-        </div>
-    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>

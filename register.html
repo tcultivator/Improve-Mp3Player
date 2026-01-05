@@ -4,29 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Register</title>
+    <title>Signup | MP3FLUX</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="register.css">
-    <script defer src="register.js"></script>
 </head>
 
 <body>
-    <form id="register">
-        <h2>Signup</h2>
-        <button type="button" onclick="window.location.replace('index.html')" id="cancelLog">X</button>
 
-        <div id="usernameBody">
-            <input type="text" id="username" required placeholder="">
-            <label for="username">Enter Username</label>
-        </div>
-        <div id="passwordBody">
-            <input type="password" id="password" required placeholder="">
-            <label for="password">Enter Password</label>
-        </div>
-        <div id="loginNav">
-            <button type="submit">Submit</button>
-            <label>Already have account? <a href="login.html">Login</a></label>
-        </div>
-    </form>
+    <div class="glass-background"></div>
+
+    <div class="register-container">
+        <form id="register" class="register-card">
+            <!-- Close Button -->
+            <button type="button" onclick="window.location.replace('index.html')" class="btn-close" title="Cancel">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <header class="register-header">
+                <h2>Join <span>MP3FLUX</span></h2>
+                <p>Create an account to save your playlist</p>
+            </header>
+
+            <div class="input-group">
+                <div class="field-wrapper">
+                    <input type="text" id="username" required placeholder=" ">
+                    <label for="username">Create Username</label>
+                    <i class="fa-solid fa-user-plus input-icon"></i>
+                </div>
+
+                <div class="field-wrapper">
+                    <input type="password" id="password" required placeholder=" ">
+                    <label for="password">Create Password</label>
+                    <i class="fa-solid fa-shield-halved input-icon"></i>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-msg"></div>
+
+            <div class="register-actions">
+                <button type="submit" id="submitBtn" class="btn-submit">Create Account</button>
+                <p class="login-link">
+                    Already have an account? <a href="login.html">Login</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script src="register.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,15 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: #000328;
+    background-color: #1a1c2b;
     color: white;
     font-family: 'Roboto', sans-serif;
     text-align: center;
+    box-sizing: border-box;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    width: 100%;
 }
 
 #header {
@@ -13,6 +18,7 @@ body {
     align-items: center;
     justify-content: space-between;
     margin: 0px 10px;
+
 
 }
 
@@ -77,15 +83,9 @@ body {
 }
 
 #disk {
-    background-color: #ffffff0c;
-    max-width: 600px;
-    min-width: 200px;
-    width: 70%;
+    background: #1f2235;
+    width: 80%;
     margin: auto;
-    max-height: 600px;
-    min-height: 200px;
-    height: 100%;
-    aspect-ratio: 1/1;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -93,10 +93,14 @@ body {
     opacity: 1;
     text-align: center;
     justify-content: center;
+    padding: 4rem;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.199);
 }
 
 #disk i {
-    font-size: 330px;
+    font-size: 230px;
+    color: #8a8aff;
     width: 100%;
     align-items: center;
     text-align: center;
@@ -116,6 +120,20 @@ body {
 }
 
 @media (max-width:700px) {
+    #disk {
+        background-color: #ffffff0c;
+        width: 90%;
+        margin: auto;
+        aspect-ratio: 1/1;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        font-size: 100%;
+        opacity: 1;
+        text-align: center;
+        justify-content: center;
+    }
+
     #disk i {
         font-size: 230px;
         width: 100%;
@@ -148,13 +166,13 @@ body {
     margin: auto;
 
     -webkit-appearance: none;
-    
+
 }
 
 #song input::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    background-color: #00458E;
+    background-color: #8a8aff;
     height: 1rem;
     width: 10px;
 
@@ -182,7 +200,7 @@ body {
 
 #inputSong input {
     margin: auto;
-    
+
     width: 90px;
     align-items: center;
     text-align: center;
@@ -197,9 +215,9 @@ body {
     border: none;
     border-radius: 5px;
     font-weight: bold;
-    background-color: #00458E;
+    background-color: #8a8aff;
     position: absolute;
-    
+
 }
 
 #control {
@@ -254,6 +272,7 @@ body {
     font-size: 20px;
 
 }
+
 #control #next i {
 
     font-size: 20px;
@@ -338,7 +357,7 @@ body {
     word-break: break-all;
     box-sizing: border-box;
     flex-direction: column;
-    
+
 }
 
 #songName button {
@@ -353,12 +372,12 @@ body {
 }
 
 #songName button:hover {
-   background-color: rgb(54, 54, 54);
+    background-color: rgb(54, 54, 54);
 }
 
 
 
-#playingSong{
+#playingSong {
     text-align: center;
     align-items: center;
     justify-content: center;

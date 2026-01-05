@@ -4,29 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UserLogin</title>
+    <title>Login | MP3FLUX</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
-    <script defer src="login.js"></script>
 </head>
 
 <body>
-    <form id="login">
-        <h2>Login</h2>
-        <button type="button" onclick="window.location.replace('index.html')" id="cancelLog">X</button>
 
-        <div id="usernameBody">
-            <input type="text" id="username" required placeholder="">
-            <label for="username">Enter Username</label>
-        </div>
-        <div id="passwordBody">
-            <input type="password" id="password" required placeholder="">
-            <label for="password">Enter Password</label>
-        </div>
-        <div id="loginNav">
-            <button type="submit" >Submit</button>
-            <label>Don't have account yet? <a href="register.html">Signup</a></label>
-        </div>
-    </form>
+    <div class="glass-background"></div>
+
+    <div class="login-container">
+        <form id="login" class="login-card">
+            <!-- Close Button -->
+            <button type="button" onclick="window.location.replace('index.html')" class="btn-close" title="Cancel">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <header class="login-header">
+                <h2>Welcome <span>Back</span></h2>
+                <p>Login to your MP3FLUX account</p>
+            </header>
+
+            <div class="input-group">
+                <div class="field-wrapper">
+                    <input type="text" id="username" required placeholder=" ">
+                    <label for="username">Username</label>
+                    <i class="fa-solid fa-user input-icon"></i>
+                </div>
+
+                <div class="field-wrapper">
+                    <input type="password" id="password" required placeholder=" ">
+                    <label for="password">Password</label>
+                    <i class="fa-solid fa-lock input-icon"></i>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-msg"></div>
+
+            <div class="login-actions">
+                <button type="submit" class="btn-submit">Login Now</button>
+                <p class="signup-link">
+                    Don't have an account? <a href="register.html">Sign up</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script src="login.js"></script>
 </body>
 
 </html>
